@@ -29,5 +29,18 @@ export default defineConfig(() => {
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
+    plugins: [
+      {
+        name: 'rewrite-daftarlagu',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.url === '/daftarlagu' || req.url === '/daftarlagu/') {
+              req.url = '/daftarlagu.html';
+            }
+            next();
+          });
+        },
+      },
+    ],
   };
 });
