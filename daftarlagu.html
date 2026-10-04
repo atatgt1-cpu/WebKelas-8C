@@ -3,472 +3,2303 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#040310" />
-<title>Daftar Lagu — 8C Universe</title>
-<meta name="description" content="Koleksi dan daftar lagu resmi kelas 8C-SADOEL — Soundtrack, Playlist, dan Audio Player." />
-<meta property="og:title" content="Daftar Lagu — 8C Universe" />
-<meta property="og:description" content="Koleksi dan daftar lagu resmi kelas 8C-SADOEL — Soundtrack, Playlist, dan Audio Player." />
+<meta name="theme-color" content="#121212" />
+<title>Daftar Lagu &amp; Katalog Penyanyi — 8C Universe</title>
+<meta name="description" content="Katalog Penyanyi dan Daftar Lagu resmi kelas 8C-SADOEL — Layout Spotify dengan pemutar musik interaktif, diskografi artis, dan playlist lagu." />
+<meta property="og:title" content="Daftar Lagu &amp; Katalog Penyanyi — 8C Universe" />
+<meta property="og:description" content="Katalog Penyanyi dan Daftar Lagu resmi kelas 8C-SADOEL — Layout Spotify dengan pemutar musik interaktif, diskografi artis, dan playlist lagu." />
 <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/src/music-system.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg-0: #030310;
-    --bg-1: #05061a;
-    --bg-2: #080a24;
-    --navy: #0a0e2e;
+  /* ==========================================================
+     0. DESIGN TOKENS (SPOTIFY DARK THEME + 8C ACCENTS)
+     ========================================================== */
+  :root {
+    --sp-black: #000000;
+    --sp-base: #121212;
+    --sp-card: #181818;
+    --sp-card-hover: #242424;
+    --sp-elevated: #282828;
+    --sp-stroke: rgba(255, 255, 255, 0.08);
+    --sp-stroke-hover: rgba(255, 255, 255, 0.18);
+    --sp-green: #1ed760;
+    --sp-green-hover: #1fdf64;
+    --sp-green-press: #169c46;
+    --sp-text-main: #ffffff;
+    --sp-text-sub: #b3b3b3;
+    --sp-text-muted: #6a6a6a;
+    --cyan: #38e0d8;
     --violet: #7c5cff;
     --violet-2: #a855f7;
-    --cyan: #38e0d8;
-    --gold: #f2b84b;
-    --rose: #ff6b8b;
-    --ink-0: #f6f7fb;
-    --ink-1: #c7cbe8;
-    --ink-2: #8b8fb8;
-    --ink-3: #5a5e83;
-    --glass: rgba(255,255,255,0.035);
-    --glass-strong: rgba(255,255,255,0.06);
-    --stroke: rgba(255,255,255,0.09);
-    --stroke-soft: rgba(255,255,255,0.055);
-    --radius-lg: 26px;
-    --radius-md: 18px;
-    --radius-sm: 12px;
-    --ease: cubic-bezier(.19,1,.22,1);
-    --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
-    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --radius-full: 9999px;
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --sidebar-width: 270px;
+    --player-height: 84px;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Space Grotesk', var(--font-sans);
+    --ease: cubic-bezier(0.19, 1, 0.22, 1);
   }
 
-  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
-  *{ -webkit-tap-highlight-color: transparent; }
-
-  body{
-    font-family: var(--font-body);
-    background: var(--bg-0);
-    color: var(--ink-0);
-    line-height: 1.6;
+  /* ==========================================================
+     1. RESET & BASE
+     ========================================================== */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+  }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--sp-black);
+    color: var(--sp-text-main);
+    line-height: 1.5;
     overflow-x: hidden;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
     min-height: 100vh;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    font-family: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+  }
+  input {
+    font-family: inherit;
+  }
+
+  /* Scrollbars */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sp-green);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* ==========================================================
+     2. SPOTIFY APP LAYOUT SHELL
+     ========================================================== */
+  .spotify-app {
+    display: flex;
+    height: calc(100vh - var(--player-height));
+    height: calc(100dvh - var(--player-height));
+    overflow: hidden;
+    position: relative;
+    background-color: var(--sp-black);
+    padding: 8px 8px 0 8px;
+    gap: 8px;
+  }
+
+  /* SIDEBAR (Desktop) */
+  .sp-sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    gap: 8px;
+    height: 100%;
   }
 
-  a{ color:inherit; text-decoration:none; }
-  button{ font-family:inherit; }
-
-  ::-webkit-scrollbar{ width:8px; }
-  ::-webkit-scrollbar-track{ background:var(--bg-0); }
-  ::-webkit-scrollbar-thumb{ background: linear-gradient(var(--violet),var(--violet-2)); border-radius:10px; }
-
-  .bg-fx{
-    position: fixed; inset:0; z-index:-2; overflow:hidden;
-    background:
-      radial-gradient(ellipse 60% 40% at 15% 0%, rgba(124,92,255,0.22), transparent 60%),
-      radial-gradient(ellipse 55% 45% at 100% 20%, rgba(168,85,247,0.16), transparent 60%),
-      radial-gradient(ellipse 60% 50% at 50% 100%, rgba(56,224,216,0.08), transparent 60%),
-      linear-gradient(180deg, var(--bg-0) 0%, var(--navy) 45%, var(--bg-0) 100%);
-  }
-  .bg-fx::before{
-    content:""; position:absolute; inset:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-    background-size: 42px 42px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
-  }
-  .grain{
-    position: fixed; inset:0; z-index:-1; opacity:0.035; pointer-events:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .sp-nav-panel, .sp-library-panel {
+    background: var(--sp-base);
+    border-radius: var(--radius-md);
+    padding: 16px;
   }
 
-  /* NAVBAR */
-  .nav{
-    position: fixed; top:0; left:0; width:100%; z-index:1000;
-    padding-top: env(safe-area-inset-top);
-    background: rgba(4,4,16,0.78);
-    backdrop-filter: blur(12px) saturate(120%);
-    -webkit-backdrop-filter: blur(12px) saturate(120%);
-    border-bottom: 1px solid var(--stroke-soft);
-  }
-  .nav-container{
-    display:flex; justify-content:space-between; align-items:center;
-    height:64px; padding:0 18px; max-width:1100px; margin:0 auto;
-  }
-  .nav-right-group {
+  .sp-brand {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
-  .brand{
-    display:flex; align-items:center; gap:9px;
-    font-family: var(--font-display);
-    font-size:1.05rem; font-weight:700; letter-spacing:-0.02em;
-    color:#fff;
-    cursor:pointer;
-  }
-  .brand-dot{
-    width:9px; height:9px; border-radius:50%;
-    background: linear-gradient(135deg,var(--violet),var(--cyan));
-    box-shadow: 0 0 14px 2px rgba(124,92,255,0.75);
-    flex-shrink:0;
-  }
-
-  .nav-links{ display:none; gap:6px; align-items:center; }
-  .nav-links a{
-    position:relative; text-decoration:none; color:var(--ink-1);
-    font-size:0.85rem; font-weight:600; padding:8px 16px; border-radius:100px;
-    transition: color .25s ease, background .25s ease;
-  }
-  .nav-links a:hover, .nav-links a.active{
-    color:#fff;
-    background: rgba(255,255,255,0.06);
-  }
-  .nav-links a.active{
-    color: var(--cyan);
+    margin-bottom: 20px;
+    padding: 4px 6px;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
     font-weight: 700;
-    border: 1px solid rgba(56,224,216,0.25);
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+  .sp-brand-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--sp-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    flex-shrink: 0;
+    box-shadow: 0 0 16px rgba(30, 215, 96, 0.4);
+  }
+  .sp-brand-icon svg {
+    width: 18px;
+    height: 18px;
   }
 
-  .mini-clock{
+  .sp-menu-list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    font-size: 0.65rem;
-    color: var(--ink-1);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--stroke);
-    padding: 4px 8px;
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
-    font-variant-numeric: tabular-nums;
+    gap: 6px;
   }
-  .mini-clock-time{
-    font-family: var(--font-display);
+  .sp-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--sp-text-sub);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: color 0.2s ease, background 0.2s ease;
+    cursor: pointer;
+  }
+  .sp-menu-item svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .sp-menu-item:hover {
+    color: var(--sp-text-main);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .sp-menu-item.active {
+    color: var(--sp-text-main);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .sp-library-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .sp-library-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding: 0 4px;
+    color: var(--sp-text-sub);
     font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .sp-library-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--sp-text-sub);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+  .sp-library-title:hover {
+    color: var(--sp-text-main);
+  }
+  .sp-library-badge {
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--sp-text-sub);
+  }
+
+  .sp-sidebar-artists {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 4px;
+  }
+  .sp-sidebar-artist-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .sp-sidebar-artist-item:hover {
+    background: var(--sp-card-hover);
+  }
+  .sp-sidebar-artist-item.active {
+    background: rgba(30, 215, 96, 0.12);
+  }
+  .sp-sidebar-artist-item.active .sp-s-name {
+    color: var(--sp-green);
+  }
+  .sp-sidebar-artist-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #282828;
+    flex-shrink: 0;
+  }
+  .sp-s-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sp-s-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--sp-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sp-s-role {
+    font-size: 0.72rem;
+    color: var(--sp-text-sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* MAIN CONTENT AREA */
+  .sp-main {
+    flex: 1;
+    background: var(--sp-base);
+    border-radius: var(--radius-md);
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOP BAR */
+  .sp-topbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(18, 18, 18, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.3s ease;
+  }
+  .sp-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sp-nav-arrow {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .sp-nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.85);
+    transform: scale(1.05);
+  }
+  .sp-nav-arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sp-search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .sp-search-input {
+    background: var(--sp-card-hover);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    padding: 9px 18px 9px 40px;
+    font-size: 0.84rem;
+    color: #fff;
+    width: 280px;
+    outline: none;
+    transition: border-color 0.2s ease, width 0.3s ease, background 0.2s ease;
+  }
+  .sp-search-input:focus {
+    border-color: #fff;
+    background: #2a2a2a;
+    width: 340px;
+  }
+  .sp-search-input::placeholder {
+    color: var(--sp-text-sub);
+    font-size: 0.8rem;
+  }
+  .sp-search-icon {
+    position: absolute;
+    left: 14px;
+    width: 16px;
+    height: 16px;
+    color: var(--sp-text-sub);
+    pointer-events: none;
+  }
+  .sp-search-clear {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--sp-text-sub);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .sp-search-clear.visible {
+    display: flex;
+  }
+
+  .sp-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sp-btn-back-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .sp-btn-back-home:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.03);
+  }
+  .sp-btn-back-home svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sp-realtime-clock {
+    font-variant-numeric: tabular-nums;
     font-size: 0.75rem;
-    color: var(--cyan);
+    color: var(--sp-text-sub);
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sp-clock-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--sp-green);
+    box-shadow: 0 0 6px var(--sp-green);
   }
 
-  .menu-toggle{
-    display:flex; flex-direction:column; justify-content:center; gap:5px;
-    width:42px; height:42px; cursor:pointer;
-    background:var(--glass); border:1px solid var(--stroke); border-radius:12px;
+  /* ==========================================================
+     3. ARTIST HERO BANNER (SPOTIFY STYLE)
+     ========================================================== */
+  .sp-hero-banner {
+    position: relative;
+    padding: 38px 32px 28px;
+    min-height: 240px;
+    display: flex;
+    align-items: flex-end;
+    gap: 28px;
+    background: linear-gradient(180deg, rgba(80, 56, 160, 0.65) 0%, rgba(18, 18, 18, 1) 100%);
+    transition: background 0.5s ease;
+    overflow: hidden;
   }
-  .menu-toggle span{
-    display:block; width:18px; height:2px; margin:0 auto; background:#fff; border-radius:10px;
-    transition: transform .3s ease, opacity .25s ease;
+  .sp-hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 40%, rgba(56, 224, 216, 0.18), transparent 70%),
+                radial-gradient(circle at 80% 20%, rgba(124, 92, 255, 0.25), transparent 60%);
+    pointer-events: none;
   }
-  .menu-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
-  .menu-toggle.active span:nth-child(2){ opacity:0; }
-  .menu-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
-
-  .side-menu{
-    position:fixed; top:0; right:0; width:min(78%,320px); height:100dvh;
-    background: linear-gradient(180deg, #0b0d28, #06071a 60%);
-    border-left:1px solid var(--stroke);
-    display:flex; flex-direction:column; gap:8px;
-    padding: calc(env(safe-area-inset-top) + 90px) 18px 28px;
-    transform: translateX(100%);
-    transition: transform .4s var(--ease);
-    z-index:2000;
+  .sp-hero-avatar-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #242424;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
   }
-  .side-menu.open{ transform: translateX(0); }
-  .side-menu a{
-    display:flex; align-items:center; gap:12px;
-    font-size:0.95rem; font-weight:600; color:var(--ink-1);
-    padding:12px 16px; border-radius:12px;
-    transition: background .2s ease, color .2s ease;
-  }
-  .side-menu a:hover, .side-menu a.active{
-    background: rgba(124,92,255,0.15); color:#fff;
-  }
-  .menu-backdrop{
-    position:fixed; inset:0; background:rgba(2,2,10,0.65); backdrop-filter: blur(4px);
-    opacity:0; visibility:hidden; transition: opacity .35s ease, visibility .35s ease; z-index:1999;
-  }
-  .menu-backdrop.active{ opacity:1; visibility:visible; }
-
-  .container{ width:100%; max-width:1040px; margin:0 auto; padding: 0 18px; flex: 1; }
-
-  .panel{
-    position:relative;
-    background: var(--glass);
-    border:1px solid var(--stroke-soft);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 24px;
-    margin-bottom: 36px;
-  }
-  @media (min-width: 760px){
-    .nav-links{ display:flex; }
-    .menu-toggle{ display:none; }
-    .side-menu, .menu-backdrop{ display:none !important; }
-    .panel{ padding: 32px; }
+  .sp-hero-avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  @media (max-width: 480px){
-    .panel{ padding: 18px 14px; }
-    .to-top{ right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); width: 40px; height: 40px; }
+  .sp-hero-info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .sp-verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: capitalize;
+  }
+  .sp-verified-icon {
+    width: 18px;
+    height: 18px;
+    color: #3d91f4;
+  }
+  .sp-hero-name {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    color: #fff;
+  }
+  .sp-hero-desc {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 65ch;
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+  .sp-hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .sp-hero-dot {
+    opacity: 0.5;
   }
 
-  @media (max-width: 420px){
-    .nav-container{ padding: 0 12px; }
-    .brand{ font-size: 0.95rem; gap: 7px; }
-    .nav-right-group{ gap: 6px; }
-    .mini-clock{ padding: 3px 6px; }
-    .nav-music-btn{ padding: 3px 6px; height: 31px; }
-    .menu-toggle{ width: 38px; height: 38px; }
+  /* ACTION BAR (BIG GREEN PLAY BUTTON, SHUFFLE, FOLLOW) */
+  .sp-action-bar {
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(180deg, rgba(18, 18, 18, 0.9) 0%, rgba(18, 18, 18, 1) 100%);
+  }
+  .sp-btn-big-play {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--sp-green);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(30, 215, 96, 0.35);
+    transition: transform 0.2s var(--ease), background 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+  .sp-btn-big-play:hover {
+    transform: scale(1.06);
+    background: var(--sp-green-hover);
+    box-shadow: 0 10px 28px rgba(30, 215, 96, 0.5);
+  }
+  .sp-btn-big-play:active {
+    transform: scale(0.96);
+    background: var(--sp-green-press);
+  }
+  .sp-btn-big-play svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    margin-left: 2px;
+  }
+  .sp-btn-big-play.is-playing svg {
+    margin-left: 0;
   }
 
-  @media (max-width: 330px){
-    .mini-clock{ display: none; }
+  .sp-btn-icon-action {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: var(--sp-text-sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+  .sp-btn-icon-action:hover {
+    color: #fff;
+    transform: scale(1.08);
+  }
+  .sp-btn-icon-action.active {
+    color: var(--sp-green);
+  }
+  .sp-btn-icon-action svg {
+    width: 22px;
+    height: 22px;
   }
 
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:0.68rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
-    color: var(--cyan); background: rgba(56,224,216,0.08); border:1px solid rgba(56,224,216,0.25);
-    padding:6px 14px; border-radius:100px; margin-bottom:12px;
+  .sp-filter-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
-  .eyebrow-dot{ width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
 
-  footer{
-    margin-top:auto; padding: 32px 18px calc(24px + env(safe-area-inset-bottom));
-    text-align:center; border-top:1px solid var(--stroke-soft);
+  /* ==========================================================
+     4. KATALOG PENYANYI SECTION (CIRCLES)
+     ========================================================== */
+  .sp-section {
+    padding: 10px 32px 28px;
   }
-  .footer-brand{ font-family: var(--font-display); font-weight:700; color:#fff; font-size:0.95rem; margin-bottom:8px; }
-  .footer-meta{ font-size:0.68rem; color:var(--ink-3); }
+  .sp-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .sp-section-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .sp-section-sub {
+    font-size: 0.8rem;
+    color: var(--sp-text-sub);
+  }
 
-  .to-top{
-    position:fixed; right:18px; bottom: calc(18px + env(safe-area-inset-bottom));
-    width:44px; height:44px; border-radius:50%; z-index:900;
-    background: rgba(10,10,28,0.85); backdrop-filter: blur(10px);
-    border:1px solid var(--stroke); color:#fff;
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-    opacity:0; visibility:hidden; transition: opacity .3s ease, visibility .3s ease;
+  .sp-artists-carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
   }
-  .to-top.show{ opacity:1; visibility:visible; }
+  .sp-artist-card {
+    background: var(--sp-card);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.25s var(--ease), box-shadow 0.25s ease;
+    position: relative;
+    border: 1px solid transparent;
+  }
+  .sp-artist-card:hover {
+    background: var(--sp-card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+  }
+  .sp-artist-card.active {
+    background: #20242a;
+    border-color: rgba(30, 215, 96, 0.45);
+    box-shadow: 0 0 20px rgba(30, 215, 96, 0.18);
+  }
+  .sp-artist-avatar-wrap {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 14px;
+    overflow: hidden;
+    background: #282828;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+  .sp-artist-avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .sp-artist-card:hover .sp-artist-avatar-wrap img {
+    transform: scale(1.05);
+  }
+  .sp-artist-play-hover {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--sp-green);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .sp-artist-play-hover svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    margin-left: 2px;
+  }
+  .sp-artist-card:hover .sp-artist-play-hover {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .sp-artist-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  .sp-artist-card.active .sp-artist-name {
+    color: var(--sp-green);
+  }
+  .sp-artist-type {
+    font-size: 0.75rem;
+    color: var(--sp-text-sub);
+    font-weight: 500;
+  }
+
+  /* ==========================================================
+     5. SPOTIFY TRACKLIST TABLE
+     ========================================================== */
+  .sp-tracklist-wrap {
+    margin-top: 10px;
+    width: 100%;
+  }
+  .sp-table-header {
+    display: grid;
+    grid-template-columns: 48px 1fr 1fr 90px;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--sp-text-sub);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .sp-th-num { text-align: center; }
+  .sp-th-title { padding-left: 8px; }
+  .sp-th-album { padding-left: 8px; }
+  .sp-th-time { text-align: right; padding-right: 12px; }
+
+  .sp-track-row {
+    display: grid;
+    grid-template-columns: 48px 1fr 1fr 90px;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    user-select: none;
+  }
+  .sp-track-row:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .sp-track-row.is-playing {
+    background: rgba(30, 215, 96, 0.08);
+  }
+  .sp-track-row.is-playing .sp-track-title {
+    color: var(--sp-green);
+  }
+
+  /* Index / Play / Equalizer Column */
+  .sp-col-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--sp-text-sub);
+    font-variant-numeric: tabular-nums;
+    position: relative;
+    height: 40px;
+  }
+  .sp-num-text {
+    display: block;
+  }
+  .sp-btn-row-play {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
+  .sp-btn-row-play svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+  .sp-track-row:hover .sp-num-text {
+    display: none;
+  }
+  .sp-track-row:hover .sp-btn-row-play {
+    display: flex;
+  }
+
+  /* Animated Soundwave Equalizer when playing */
+  .sp-eq-anim {
+    display: none;
+    align-items: flex-end;
+    gap: 2px;
+    height: 16px;
+    width: 16px;
+  }
+  .sp-eq-bar {
+    width: 3px;
+    background: var(--sp-green);
+    border-radius: 2px;
+    animation: spBounce 0.8s ease-in-out infinite alternate;
+  }
+  .sp-eq-bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+  .sp-eq-bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+  .sp-eq-bar:nth-child(3) { height: 40%; animation-delay: 0.2s; }
+  @keyframes spBounce {
+    0% { height: 20%; }
+    100% { height: 100%; }
+  }
+
+  .sp-track-row.is-playing .sp-num-text {
+    display: none;
+  }
+  .sp-track-row.is-playing .sp-eq-anim {
+    display: flex;
+  }
+  .sp-track-row.is-playing:hover .sp-eq-anim {
+    display: none;
+  }
+  .sp-track-row.is-playing:hover .sp-btn-row-play {
+    display: flex;
+  }
+
+  /* Title + Cover + Artist Column */
+  .sp-col-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    padding-left: 8px;
+  }
+  .sp-track-cover {
+    width: 42px;
+    height: 42px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #282828;
+  }
+  .sp-track-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sp-track-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sp-track-artist {
+    font-size: 0.78rem;
+    color: var(--sp-text-sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sp-track-artist-link:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+
+  /* Album Column */
+  .sp-col-album {
+    font-size: 0.84rem;
+    color: var(--sp-text-sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left: 8px;
+  }
+
+  /* Time & Like Column */
+  .sp-col-time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+    font-size: 0.84rem;
+    color: var(--sp-text-sub);
+    font-variant-numeric: tabular-nums;
+    padding-right: 12px;
+  }
+  .sp-btn-row-like {
+    color: var(--sp-text-sub);
+    opacity: 0;
+    transition: opacity 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  }
+  .sp-track-row:hover .sp-btn-row-like {
+    opacity: 1;
+  }
+  .sp-btn-row-like.is-liked {
+    opacity: 1;
+    color: var(--sp-green);
+  }
+  .sp-btn-row-like svg {
+    width: 17px;
+    height: 17px;
+  }
+  .sp-btn-row-like:hover {
+    transform: scale(1.15);
+    color: #fff;
+  }
+  .sp-btn-row-like.is-liked:hover {
+    color: var(--sp-green-hover);
+  }
+
+  .sp-empty-state {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--sp-text-sub);
+    font-size: 0.95rem;
+  }
+
+  /* ==========================================================
+     6. SPOTIFY BOTTOM AUDIO PLAYER BAR
+     ========================================================== */
+  .sp-bottom-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--player-height);
+    background: #000000;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+  }
+
+  /* Player Left (Track details) */
+  .sp-pl-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .sp-pl-cover {
+    width: 54px;
+    height: 54px;
+    border-radius: 4px;
+    object-fit: cover;
+    background: #242424;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+  .sp-pl-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .sp-pl-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .sp-pl-artist {
+    font-size: 0.74rem;
+    color: var(--sp-text-sub);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+  }
+  .sp-pl-artist:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .sp-btn-player-like {
+    color: var(--sp-text-sub);
+    margin-left: 4px;
+    flex-shrink: 0;
+    transition: color 0.2s ease, transform 0.15s ease;
+  }
+  .sp-btn-player-like:hover {
+    color: #fff;
+    transform: scale(1.15);
+  }
+  .sp-btn-player-like.is-liked {
+    color: var(--sp-green);
+  }
+  .sp-btn-player-like svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Player Center (Controls & Scrubber) */
+  .sp-pl-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .sp-pl-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 4px;
+  }
+  .sp-btn-ctrl {
+    color: var(--sp-text-sub);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.15s ease;
+    cursor: pointer;
+  }
+  .sp-btn-ctrl:hover {
+    color: #fff;
+    transform: scale(1.08);
+  }
+  .sp-btn-ctrl.active {
+    color: var(--sp-green);
+    position: relative;
+  }
+  .sp-btn-ctrl.active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--sp-green);
+  }
+  .sp-btn-ctrl svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sp-btn-main-play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, background 0.2s ease;
+    cursor: pointer;
+  }
+  .sp-btn-main-play:hover {
+    transform: scale(1.08);
+    background: var(--sp-green);
+  }
+  .sp-btn-main-play svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+    margin-left: 2px;
+  }
+  .sp-btn-main-play.is-playing svg {
+    margin-left: 0;
+  }
+
+  .sp-pl-scrubber-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+  }
+  .sp-time-label {
+    font-size: 0.72rem;
+    color: var(--sp-text-sub);
+    font-variant-numeric: tabular-nums;
+    min-width: 36px;
+    text-align: center;
+  }
+  .sp-scrubber-track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    position: relative;
+    cursor: pointer;
+    transition: height 0.15s ease;
+  }
+  .sp-scrubber-track:hover {
+    height: 6px;
+  }
+  .sp-scrubber-fill {
+    height: 100%;
+    width: 0%;
+    background: #fff;
+    border-radius: 2px;
+    position: relative;
+    pointer-events: none;
+    transition: background 0.2s ease;
+  }
+  .sp-scrubber-track:hover .sp-scrubber-fill {
+    background: var(--sp-green);
+  }
+  .sp-scrubber-handle {
+    position: absolute;
+    right: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .sp-scrubber-track:hover .sp-scrubber-handle {
+    opacity: 1;
+  }
+
+  /* Player Right (Volume & Extras) */
+  .sp-pl-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .sp-btn-vol-icon {
+    color: var(--sp-text-sub);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+  .sp-btn-vol-icon:hover {
+    color: #fff;
+  }
+  .sp-btn-vol-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .sp-vol-slider-wrap {
+    width: 100px;
+    display: flex;
+    align-items: center;
+  }
+  .sp-vol-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+  .sp-vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .sp-vol-slider-wrap:hover .sp-vol-slider::-webkit-slider-thumb {
+    opacity: 1;
+  }
+
+  /* TOAST NOTIFICATION */
+  .sp-toast {
+    position: fixed;
+    bottom: calc(var(--player-height) + 16px);
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(30, 215, 96, 0.95);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 8px 18px;
+    border-radius: var(--radius-full);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2000;
+  }
+  .sp-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ==========================================================
+     7. RESPONSIVE MEDIA QUERIES
+     ========================================================== */
+  @media (max-width: 960px) {
+    .sp-sidebar {
+      display: none;
+    }
+    .spotify-app {
+      padding: 0;
+    }
+    .sp-main {
+      border-radius: 0;
+    }
+    .sp-bottom-player {
+      grid-template-columns: 1fr auto;
+      padding: 0 14px;
+      height: 76px;
+    }
+    :root {
+      --player-height: 76px;
+    }
+    .sp-pl-right {
+      display: none;
+    }
+    .sp-pl-center {
+      align-items: flex-end;
+      width: auto;
+    }
+    .sp-pl-scrubber-row {
+      display: none;
+    }
+    .sp-pl-controls {
+      margin-bottom: 0;
+      gap: 12px;
+    }
+    .sp-table-header, .sp-track-row {
+      grid-template-columns: 36px 1fr 70px;
+    }
+    .sp-th-album, .sp-col-album {
+      display: none;
+    }
+    .sp-hero-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 24px 20px;
+    }
+    .sp-hero-avatar-wrap {
+      width: 100px;
+      height: 100px;
+    }
+    .sp-action-bar, .sp-section {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sp-topbar {
+      padding: 10px 14px;
+    }
+    .sp-search-input {
+      width: 150px;
+    }
+    .sp-search-input:focus {
+      width: 180px;
+    }
+    .sp-realtime-clock {
+      display: none;
+    }
+    .sp-artists-carousel {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .sp-artist-avatar-wrap {
+      width: 90px;
+      height: 90px;
+    }
+    .sp-hero-name {
+      font-size: 1.8rem;
+    }
+  }
 </style>
 </head>
 <body>
 
-<div class="bg-fx" aria-hidden="true"></div>
-<div class="grain" aria-hidden="true"></div>
-
-<!-- ============ NAVBAR ============ -->
-<nav class="nav">
-  <div class="nav-container">
-    <a href="index.html" class="brand" aria-label="Kembali ke Beranda 8C">
-      <span class="brand-dot" aria-hidden="true"></span> 8C · CONFIDENCE
-    </a>
-
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="index.html#jadwal">Jadwal</a>
-      <a href="index.html#piket">Piket</a>
-      <a href="index.html#rules">Peraturan</a>
-      <a href="index.html#instagram">Instagram</a>
-    </div>
-
-    <div class="nav-right-group">
-      <!-- Jam Realtime -->
-      <div class="mini-clock" id="mini-clock" title="Jam Aktif">
-        <span id="clock-day" style="font-size: 0.55rem; color: var(--ink-2);">--</span>
-        <span class="mini-clock-time" id="clock-time">--:--:--</span>
+<div class="spotify-app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sp-sidebar" aria-label="Spotify Sidebar Navigasi">
+    <div class="sp-nav-panel">
+      <div class="sp-brand">
+        <div class="sp-brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.858.207c-2.35-1.436-5.308-1.76-8.793-.964a.625.625 0 0 1-.28-1.218c3.812-.872 7.085-.497 9.724 1.117a.623.623 0 0 1 .207.858zm1.226-2.723a.78.78 0 0 1-1.073.257c-2.69-1.654-6.79-2.133-9.972-1.168a.78.78 0 1 1-.453-1.493c3.633-1.103 8.147-.568 11.24 1.332a.78.78 0 0 1 .258 1.072zm.106-2.836c-3.226-1.916-8.55-2.092-11.63-1.157a.936.936 0 1 1-.546-1.792c3.535-1.074 9.406-.864 13.11 1.334a.936.936 0 1 1-.934 1.615z"/></svg>
+        </div>
+        <span>8C · Spotify Hub</span>
       </div>
 
-      <!-- Tombol Pintas Ke Halaman Utama (Ukuran sama persis dengan jam realtime) -->
-      <a href="index.html" class="nav-music-btn" title="Kembali ke Beranda">
-        <span class="btn-sub-label">NAVIGASI</span>
-        <span class="btn-main-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Home
-        </span>
-      </a>
+      <ul class="sp-menu-list">
+        <li>
+          <a href="index.html" class="sp-menu-item" title="Kembali ke Website Resmi 8C">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Beranda Web 8C</span>
+          </a>
+        </li>
+        <li>
+          <div class="sp-menu-item active" id="menuAllTracks" role="button" tabindex="0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+            <span>Semua Lagu 8C</span>
+          </div>
+        </li>
+      </ul>
+    </div>
 
-      <!-- Menu Toggle Mobile -->
-      <div class="menu-toggle" id="mobile-menu" role="button" tabindex="0" aria-label="Buka navigasi mobile">
-        <span></span><span></span><span></span>
+    <!-- LIBRARY / KATALOG PENYANYI SIDEBAR -->
+    <div class="sp-library-panel">
+      <div class="sp-library-head">
+        <div class="sp-library-title" id="btnLibraryTitle" title="Lihat Katalog Penyanyi">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+          <span>Koleksi Penyanyi</span>
+        </div>
+        <span class="sp-library-badge" id="artistCountBadge">3 Artis</span>
+      </div>
+
+      <div class="sp-sidebar-artists" id="sidebarArtistList">
+        <!-- Rendered dynamically by JS -->
       </div>
     </div>
-  </div>
-</nav>
+  </aside>
 
-<div class="menu-backdrop" id="backdrop"></div>
+  <!-- ============ MAIN CONTENT AREA ============ -->
+  <main class="sp-main" id="mainScroll">
+    <!-- Topbar -->
+    <header class="sp-topbar">
+      <div class="sp-topbar-left">
+        <a href="index.html" class="sp-nav-arrow" title="Kembali ke Beranda 8C" aria-label="Kembali ke Beranda 8C">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
 
-<nav class="side-menu" id="side-menu">
-  <a href="index.html">Home</a>
-  <a href="daftarlagu.html" class="active">Daftar Lagu</a>
-  <a href="index.html#jadwal">Jadwal Pelajaran</a>
-  <a href="index.html#piket">Jadwal Piket</a>
-  <a href="index.html#rules">Peraturan Kelas</a>
-  <a href="index.html#instagram">Instagram</a>
-</nav>
-
-<!-- ============ KONTEN DAFTAR LAGU ============ -->
-<main class="container">
-  <header class="daftarlagu-header">
-    <span class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> Audio & Soundtrack Kelas</span>
-    <h1 class="daftarlagu-title">Daftar Lagu 8C</h1>
-    <p class="daftarlagu-sub">Pilih dan dengarkan koleksi lagu resmi kelas 8C-SADOEL. Player otomatis muncul di pojok kiri bawah saat lagu diputar.</p>
-  </header>
-
-  <div class="panel">
-    <!-- Realtime Search Input -->
-    <div class="song-search-container">
-      <svg class="song-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="text" id="songSearchInput" class="song-search-input" placeholder="Cari berdasarkan judul, artis, atau album..." aria-label="Cari lagu">
-    </div>
-
-    <!-- Grid Kartu Lagu -->
-    <div class="songs-grid" id="songsGridContainer">
-      <!-- Di-render dinamis oleh music-system.js -->
-    </div>
-  </div>
-</main>
-
-<!-- ============ FLOATING MUSIC PLAYER (AUTO-HIDE POJOK KIRI BAWAH) ============ -->
-<!-- Trigger Pill untuk membuka player kapan saja -->
-<button class="music-toggle-pill" id="musicPillToggle" title="Buka Music Player" aria-label="Buka Music Player">
-  <span class="pulse-wave"></span>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-  <span>Player Musik</span>
-</button>
-
-<!-- Container Player Melayang di Pojok Kiri Bawah -->
-<div class="music-floating-wrap" id="musicFloatingWrap">
-  <div class="floating-music-box" id="musicBox">
-    <div class="fmb-main-row">
-      <div class="fmb-cover-box">
-        <img src="/covers/song-1.jpg" id="mbCover" alt="Cover Lagu" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iIzIyMiIvPjwvc3ZnPg=='"/>
+        <!-- Realtime Search Bar -->
+        <div class="sp-search-bar">
+          <svg class="sp-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="spSearchInput" class="sp-search-input" placeholder="Cari penyanyi, lagu, atau album..." aria-label="Cari lagu atau artis">
+          <button class="sp-search-clear" id="spSearchClear" title="Hapus pencarian">&times;</button>
+        </div>
       </div>
-      <div class="fmb-info">
-        <div class="fmb-title" id="mbTitle">Memuat lagu...</div>
-        <div class="fmb-artist-album" id="mbArtist">8C-SADOEL</div>
-        <div class="fmb-status-tip" id="mbStatus">Siap diputar</div>
+
+      <div class="sp-topbar-right">
+        <div class="sp-realtime-clock" id="spClock" title="Waktu Nyata">
+          <span class="sp-clock-dot"></span>
+          <span id="spClockText">--:--:--</span>
+        </div>
+        <a href="index.html" class="sp-btn-back-home" title="Lihat Jadwal &amp; Piket 8C">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span>Web Kelas</span>
+        </a>
       </div>
-      <div class="fmb-actions">
-        <button class="fmb-ctrl-btn" id="mbPrevBtn" aria-label="Lagu sebelumnya" title="Sebelumnya">
-          <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
-        </button>
-        <button class="fmb-play-btn" id="mbPlayBtn" aria-label="Putar / Jeda" title="Putar / Jeda">
-          <svg id="mbIconPlay" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <svg id="mbIconPause" viewBox="0 0 24 24" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-        </button>
-        <button class="fmb-ctrl-btn" id="mbNextBtn" aria-label="Lagu berikutnya" title="Berikutnya">
-          <svg viewBox="0 0 24 24"><path d="m6 18 8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-        </button>
-        <button class="fmb-close-btn" id="mbCloseBtn" aria-label="Tutup player" title="Tutup">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
+    </header>
+
+    <!-- Artist Hero Showcase Banner -->
+    <section class="sp-hero-banner" id="heroBanner" aria-label="Profil Artis">
+      <div class="sp-hero-glow"></div>
+      <div class="sp-hero-avatar-wrap" id="heroAvatarWrap">
+        <img id="heroAvatarImg" src="/kelas8c.png" alt="Avatar Artis Terpilih" onerror="this.src='/covers/song-1.jpg'">
       </div>
+      <div class="sp-hero-info">
+        <div class="sp-verified-badge" id="heroBadge">
+          <svg class="sp-verified-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1.4 14.6l-3.9-3.9 1.4-1.4 2.5 2.5 6.4-6.4 1.4 1.4-7.8 7.8z"/></svg>
+          <span>Artis Terverifikasi 8C</span>
+        </div>
+        <h1 class="sp-hero-name" id="heroName">Koleksi Lagu Kelas 8C</h1>
+        <p class="sp-hero-desc" id="heroDesc">Koleksi soundtrack resmi, lagu kebersamaan, dan playlist pilihan kelas 8C-SADOEL. Jelajahi karya dari masing-masing penyanyi di bawah ini.</p>
+        <div class="sp-hero-stats" id="heroStats">
+          <span id="heroSongsCount">3 Lagu</span>
+          <span class="sp-hero-dot">&bull;</span>
+          <span id="heroGenre">Anthem, Lo-Fi &amp; Akustik</span>
+          <span class="sp-hero-dot">&bull;</span>
+          <span id="heroListeners">32 Siswa Aktif</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action Bar -->
+    <div class="sp-action-bar">
+      <button class="sp-btn-big-play" id="btnBigPlay" title="Putar Semua Lagu dari Artis Ini" aria-label="Putar Lagu Artis Terpilih">
+        <svg id="bigPlayIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="sp-btn-icon-action" id="btnShuffle" title="Putar Acak (Shuffle)" aria-label="Putar Acak">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+      </button>
+      <button class="sp-btn-icon-action" id="btnFollow" title="Ikuti Penyanyi Ini" aria-label="Ikuti Penyanyi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <span class="sp-filter-tag" id="currentFilterTag">Semua Penyanyi</span>
     </div>
 
-    <!-- Seeker Progress Bar & Durasi -->
-    <div class="fmb-progress-row">
-      <div class="fmb-bar-wrap" id="mbBarWrap" title="Klik untuk mencari posisi lagu">
-        <div class="fmb-bar-fill" id="mbBarFill"></div>
+    <!-- KATALOG PENYANYI SECTION -->
+    <section class="sp-section" aria-labelledby="katalogTitle">
+      <div class="sp-section-head">
+        <div>
+          <h2 class="sp-section-title" id="katalogTitle">Katalog Penyanyi &amp; Artis 8C</h2>
+          <p class="sp-section-sub">Klik salah satu penyanyi untuk memfilter lagu-lagu yang dinyanyikan oleh penyanyi tersebut.</p>
+        </div>
       </div>
-      <div class="fmb-time-text" id="mbTimeDisplay">0:00 / 0:00</div>
-    </div>
 
-    <!-- Volume Control -->
-    <div class="fmb-volume-row">
-      <svg class="fmb-vol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-      <input type="range" class="fmb-vol-slider" id="mbVolSlider" min="0" max="1" step="0.01" value="0.85" title="Volume Lagu" aria-label="Volume Lagu">
-    </div>
-  </div>
-  <audio id="mbAudio" preload="metadata"></audio>
+      <div class="sp-artists-carousel" id="artistsCarousel">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- SPOTIFY TRACKLIST TABLE -->
+    <section class="sp-section" aria-labelledby="tracklistTitle">
+      <div class="sp-section-head">
+        <div>
+          <h2 class="sp-section-title" id="tracklistTitle">Daftar Lagu Populer</h2>
+          <p class="sp-section-sub" id="tracklistSub">Menampilkan seluruh lagu dalam katalog kelas 8C.</p>
+        </div>
+      </div>
+
+      <div class="sp-tracklist-wrap">
+        <div class="sp-table-header">
+          <div class="sp-th-num">#</div>
+          <div class="sp-th-title">Judul Lagu</div>
+          <div class="sp-th-album">Album</div>
+          <div class="sp-th-time">Durasi</div>
+        </div>
+
+        <div id="tracksTableBody">
+          <!-- Rendered dynamically by JS -->
+        </div>
+      </div>
+    </section>
+  </main>
 </div>
 
-<footer>
-  <div class="footer-brand">8C - Confidence</div>
-  <div class="footer-meta">&copy; By Gilang &middot; V-2 &middot; 2026</div>
+<!-- ============ SPOTIFY BOTTOM AUDIO PLAYER BAR ============ -->
+<footer class="sp-bottom-player" id="spBottomPlayer" aria-label="Pemutar Audio">
+  <!-- Left: Currently Playing Track -->
+  <div class="sp-pl-left">
+    <img src="/covers/song-1.jpg" alt="Cover Lagu" class="sp-pl-cover" id="plCover" onerror="this.src='/covers/song-1.jpg'">
+    <div class="sp-pl-meta">
+      <div class="sp-pl-title" id="plTitle">Confidence Anthem</div>
+      <div class="sp-pl-artist" id="plArtist" title="Lihat profil penyanyi">8C-SADOEL</div>
+    </div>
+    <button class="sp-btn-player-like" id="plLikeBtn" title="Simpan ke Lagu Favorit" aria-label="Suka lagu ini">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    </button>
+  </div>
+
+  <!-- Center: Controls & Interactive Scrubber -->
+  <div class="sp-pl-center">
+    <div class="sp-pl-controls">
+      <button class="sp-btn-ctrl" id="btnPlShuffle" title="Acak Lagu" aria-label="Acak lagu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+      </button>
+      <button class="sp-btn-ctrl" id="btnPlPrev" title="Lagu Sebelumnya" aria-label="Lagu sebelumnya">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+      </button>
+      <button class="sp-btn-main-play" id="btnPlPlay" title="Putar / Jeda" aria-label="Putar atau Jeda">
+        <svg id="plPlayIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <button class="sp-btn-ctrl" id="btnPlNext" title="Lagu Berikutnya" aria-label="Lagu berikutnya">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="m6 18 8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+      </button>
+      <button class="sp-btn-ctrl" id="btnPlRepeat" title="Ulangi Lagu" aria-label="Ulangi lagu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </button>
+    </div>
+
+    <div class="sp-pl-scrubber-row">
+      <span class="sp-time-label" id="plCurrentTime">0:00</span>
+      <div class="sp-scrubber-track" id="plScrubberTrack" title="Geser untuk mencari posisi lagu">
+        <div class="sp-scrubber-fill" id="plScrubberFill">
+          <div class="sp-scrubber-handle"></div>
+        </div>
+      </div>
+      <span class="sp-time-label" id="plTotalTime">0:00</span>
+    </div>
+  </div>
+
+  <!-- Right: Volume & Extras -->
+  <div class="sp-pl-right">
+    <button class="sp-btn-vol-icon" id="btnMuteToggle" title="Bisukan Suara" aria-label="Bisukan atau bunyikan suara">
+      <svg id="volIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+    </button>
+    <div class="sp-vol-slider-wrap">
+      <input type="range" class="sp-vol-slider" id="volSlider" min="0" max="1" step="0.01" value="0.85" title="Volume Lagu" aria-label="Pengatur Volume">
+    </div>
+  </div>
 </footer>
 
-<button class="to-top" id="toTop" aria-label="Kembali ke atas">
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-</button>
+<!-- Toast Notification -->
+<div class="sp-toast" id="spToast">Disimpan ke Favorit</div>
 
-<script type="module" src="/src/music-system.js"></script>
+<!-- Audio Engine Element -->
+<audio id="spAudioEngine" preload="metadata"></audio>
+
 <script>
-(function(){
+(function() {
   "use strict";
-  // Jam Realtime
-  function updateClock(){
-    var dayEl = document.getElementById('clock-day');
-    var timeEl = document.getElementById('clock-time');
-    if(!dayEl || !timeEl) return;
-    var hariList = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-    function tick(){
-      var now = new Date();
-      var hh = String(now.getHours()).padStart(2,'0');
-      var mm = String(now.getMinutes()).padStart(2,'0');
-      var ss = String(now.getSeconds()).padStart(2,'0');
-      dayEl.textContent = hariList[now.getDay()];
-      timeEl.textContent = hh + ':' + mm + ':' + ss;
+
+  // DATA KATALOG PENYANYI & DISKOGRAFI LAGU
+  var catalogData = {
+    all: {
+      id: "all",
+      name: "Koleksi Lagu Kelas 8C",
+      role: "Semua Penyanyi",
+      avatar: "/kelas8c.png",
+      bio: "Koleksi soundtrack resmi, lagu kebersamaan, dan playlist pilihan kelas 8C-SADOEL. Jelajahi karya dari masing-masing penyanyi di bawah ini.",
+      genre: "Anthem, Lo-Fi & Akustik",
+      listeners: "32 Siswa Aktif"
+    },
+    artists: [
+      {
+        id: "8c-sadoel",
+        name: "8C-SADOEL",
+        role: "Grup Vokal & Siswa 8C",
+        avatar: "/covers/song-1.jpg",
+        bio: "Vokal grup resmi kelas 8C dengan lagu kebanggaan Confidence Anthem. Penuh semangat solidaritas tanpa batas, persahabatan sejati, dan kekompakan.",
+        genre: "Anthem & Pop Semangat",
+        listeners: "32 Pendengar Siswa"
+      },
+      {
+        id: "confidence-beats",
+        name: "Confidence Beats",
+        role: "Produser Musik Lo-Fi",
+        avatar: "/covers/song-2.jpg",
+        bio: "Produser musik Lo-Fi & chill study beats untuk menemani jam belajar malam kelas 8C agar pikiran tetap tenang, rileks, dan fokus meraih prestasi.",
+        genre: "Lo-Fi Hip-Hop / Chill",
+        listeners: "8C Study Club"
+      },
+      {
+        id: "class-of-8c",
+        name: "Class of 8C",
+        role: "Paduan Suara Siswa",
+        avatar: "/covers/song-3.jpg",
+        bio: "Kolektif paduan suara siswa-siswi 8C yang membawakan lagu Semangat Pagi 8C untuk menebarkan energi positif, keceriaan, dan inspirasi setiap pagi.",
+        genre: "Akustik & Pop Ceria",
+        listeners: "Seluruh Warga 8C"
+      }
+    ],
+    songs: [
+      {
+        id: 1,
+        title: "Confidence Anthem",
+        artistId: "8c-sadoel",
+        artist: "8C-SADOEL",
+        album: "Universe Vol. 1",
+        src: "/music/song-1.mp3",
+        cover: "/covers/song-1.jpg",
+        duration: "2:30"
+      },
+      {
+        id: 2,
+        title: "Midnight Study",
+        artistId: "confidence-beats",
+        artist: "Confidence Beats",
+        album: "Lo-Fi 8C",
+        src: "/music/song-2.mp3",
+        cover: "/covers/song-2.jpg",
+        duration: "2:15"
+      },
+      {
+        id: 3,
+        title: "Semangat Pagi 8C",
+        artistId: "class-of-8c",
+        artist: "Class of 8C",
+        album: "Semangat Belajar",
+        src: "/music/song-3.mp3",
+        cover: "/covers/song-3.jpg",
+        duration: "2:50"
+      }
+    ]
+  };
+
+  // State Management
+  var state = {
+    selectedArtistId: "all",
+    currentSongIndex: 0,
+    isPlaying: false,
+    isShuffle: false,
+    isRepeat: false,
+    searchQuery: "",
+    likedSongIds: {},
+    volume: 0.85,
+    isMuted: false
+  };
+
+  // Load liked songs from localStorage
+  try {
+    var storedLikes = localStorage.getItem("8c_liked_songs");
+    if (storedLikes) {
+      state.likedSongIds = JSON.parse(storedLikes);
     }
-    tick();
-    setInterval(tick, 1000);
+  } catch (e) {}
+
+  // Load saved song index from sessionStorage
+  try {
+    var savedIdx = sessionStorage.getItem("8c_current_song_idx");
+    if (savedIdx !== null) {
+      var parsed = parseInt(savedIdx, 10);
+      if (!isNaN(parsed) && parsed >= 0 && parsed < catalogData.songs.length) {
+        state.currentSongIndex = parsed;
+      }
+    }
+  } catch (e) {}
+
+  // DOM Elements Cache
+  var dom = {
+    audio: document.getElementById("spAudioEngine"),
+    heroBanner: document.getElementById("heroBanner"),
+    heroAvatarImg: document.getElementById("heroAvatarImg"),
+    heroName: document.getElementById("heroName"),
+    heroDesc: document.getElementById("heroDesc"),
+    heroSongsCount: document.getElementById("heroSongsCount"),
+    heroGenre: document.getElementById("heroGenre"),
+    heroListeners: document.getElementById("heroListeners"),
+    currentFilterTag: document.getElementById("currentFilterTag"),
+    btnBigPlay: document.getElementById("btnBigPlay"),
+    bigPlayIcon: document.getElementById("bigPlayIcon"),
+    btnShuffle: document.getElementById("btnShuffle"),
+    btnFollow: document.getElementById("btnFollow"),
+    artistsCarousel: document.getElementById("artistsCarousel"),
+    sidebarArtistList: document.getElementById("sidebarArtistList"),
+    tracksTableBody: document.getElementById("tracksTableBody"),
+    tracklistTitle: document.getElementById("tracklistTitle"),
+    tracklistSub: document.getElementById("tracklistSub"),
+    searchInput: document.getElementById("spSearchInput"),
+    searchClear: document.getElementById("spSearchClear"),
+    clockText: document.getElementById("spClockText"),
+    menuAllTracks: document.getElementById("menuAllTracks"),
+    btnLibraryTitle: document.getElementById("btnLibraryTitle"),
+    // Bottom Player
+    plCover: document.getElementById("plCover"),
+    plTitle: document.getElementById("plTitle"),
+    plArtist: document.getElementById("plArtist"),
+    plLikeBtn: document.getElementById("plLikeBtn"),
+    btnPlShuffle: document.getElementById("btnPlShuffle"),
+    btnPlPrev: document.getElementById("btnPlPrev"),
+    btnPlPlay: document.getElementById("btnPlPlay"),
+    plPlayIcon: document.getElementById("plPlayIcon"),
+    btnPlNext: document.getElementById("btnPlNext"),
+    btnPlRepeat: document.getElementById("btnPlRepeat"),
+    plCurrentTime: document.getElementById("plCurrentTime"),
+    plTotalTime: document.getElementById("plTotalTime"),
+    plScrubberTrack: document.getElementById("plScrubberTrack"),
+    plScrubberFill: document.getElementById("plScrubberFill"),
+    btnMuteToggle: document.getElementById("btnMuteToggle"),
+    volIcon: document.getElementById("volIcon"),
+    volSlider: document.getElementById("volSlider"),
+    toast: document.getElementById("spToast"),
+    mainScroll: document.getElementById("mainScroll")
+  };
+
+  // Helper Toast
+  var toastTimer = null;
+  function showToast(message) {
+    if (!dom.toast) return;
+    dom.toast.textContent = message;
+    dom.toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function() {
+      dom.toast.classList.remove("show");
+    }, 2400);
   }
 
-  // Nav Mobile Toggle
-  var toggle = document.getElementById('mobile-menu');
-  var menu = document.getElementById('side-menu');
-  var backdrop = document.getElementById('backdrop');
-  if(toggle && menu && backdrop){
-    function openMenu(){
-      menu.classList.add('open');
-      toggle.classList.add('active');
-      backdrop.classList.add('active');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
+  // Format mm:ss
+  function formatSeconds(sec) {
+    if (isNaN(sec) || !isFinite(sec) || sec < 0) return "0:00";
+    var m = Math.floor(sec / 60);
+    var s = Math.floor(sec % 60);
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  // Safe Audio Path
+  function getSafeAudioUrl(path) {
+    if (!path) return "";
+    if (path.startsWith("data:") || path.startsWith("http://") || path.startsWith("https://")) return path;
+    var clean = path.replace(/\\/g, "/");
+    var normalized = clean.startsWith("/") ? clean : "/" + clean;
+    if (window.location.origin && window.location.origin !== "null" && !window.location.origin.startsWith("file:")) {
+      return window.location.origin + normalized;
     }
-    function closeMenu(){
-      menu.classList.remove('open');
-      toggle.classList.remove('active');
-      backdrop.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
+    return normalized;
+  }
+
+  // Get active filtered song list based on selected artist and search query
+  function getFilteredSongs() {
+    var list = catalogData.songs;
+    if (state.selectedArtistId !== "all") {
+      list = list.filter(function(s) {
+        return s.artistId === state.selectedArtistId;
+      });
     }
-    toggle.addEventListener('click', function(){
-      if(menu.classList.contains('open')) closeMenu();
-      else openMenu();
+    if (state.searchQuery) {
+      var q = state.searchQuery.toLowerCase();
+      list = list.filter(function(s) {
+        return s.title.toLowerCase().includes(q) ||
+               s.artist.toLowerCase().includes(q) ||
+               s.album.toLowerCase().includes(q);
+      });
+    }
+    return list;
+  }
+
+  // Select Artist (Katalog Penyanyi)
+  function selectArtist(artistId) {
+    state.selectedArtistId = artistId;
+    var artistInfo = artistId === "all"
+      ? catalogData.all
+      : catalogData.artists.find(function(a) { return a.id === artistId; }) || catalogData.all;
+
+    // Update Hero Banner
+    dom.heroName.textContent = artistInfo.name;
+    dom.heroDesc.textContent = artistInfo.bio;
+    dom.heroAvatarImg.src = artistInfo.avatar;
+    dom.heroGenre.textContent = artistInfo.genre;
+    dom.heroListeners.textContent = artistInfo.listeners;
+    dom.currentFilterTag.textContent = artistInfo.name;
+
+    // Background gradient changes per artist
+    if (artistId === "8c-sadoel") {
+      dom.heroBanner.style.background = "linear-gradient(180deg, rgba(124, 92, 255, 0.7) 0%, rgba(18, 18, 18, 1) 100%)";
+    } else if (artistId === "confidence-beats") {
+      dom.heroBanner.style.background = "linear-gradient(180deg, rgba(56, 224, 216, 0.5) 0%, rgba(18, 18, 18, 1) 100%)";
+    } else if (artistId === "class-of-8c") {
+      dom.heroBanner.style.background = "linear-gradient(180deg, rgba(242, 184, 75, 0.55) 0%, rgba(18, 18, 18, 1) 100%)";
+    } else {
+      dom.heroBanner.style.background = "linear-gradient(180deg, rgba(80, 56, 160, 0.65) 0%, rgba(18, 18, 18, 1) 100%)";
+    }
+
+    // Update Section Headings
+    if (artistId === "all") {
+      dom.tracklistTitle.textContent = "Daftar Lagu Populer";
+      dom.tracklistSub.textContent = "Menampilkan seluruh koleksi lagu kelas 8C.";
+      dom.menuAllTracks.classList.add("active");
+    } else {
+      dom.tracklistTitle.textContent = "Diskografi: " + artistInfo.name;
+      dom.tracklistSub.textContent = "Semua lagu yang dinyanyikan dan diproduksi oleh " + artistInfo.name + ".";
+      dom.menuAllTracks.classList.remove("active");
+    }
+
+    renderArtists();
+    renderTracks();
+
+    var count = getFilteredSongs().length;
+    dom.heroSongsCount.textContent = count + " Lagu";
+  }
+
+  // Render Artist Catalog (Sidebar + Main Carousel)
+  function renderArtists() {
+    // 1. Sidebar Artists
+    if (dom.sidebarArtistList) {
+      dom.sidebarArtistList.innerHTML = "";
+
+      // All item
+      var allItem = document.createElement("div");
+      allItem.className = "sp-sidebar-artist-item" + (state.selectedArtistId === "all" ? " active" : "");
+      allItem.innerHTML =
+        '<img src="' + catalogData.all.avatar + '" class="sp-sidebar-artist-avatar" alt="Semua Artis">' +
+        '<div class="sp-s-meta">' +
+        '  <span class="sp-s-name">Semua Penyanyi</span>' +
+        '  <span class="sp-s-role">3 Lagu • Koleksi Lengkap</span>' +
+        '</div>';
+      allItem.addEventListener("click", function() {
+        selectArtist("all");
+      });
+      dom.sidebarArtistList.appendChild(allItem);
+
+      catalogData.artists.forEach(function(artist) {
+        var item = document.createElement("div");
+        item.className = "sp-sidebar-artist-item" + (state.selectedArtistId === artist.id ? " active" : "");
+        item.innerHTML =
+          '<img src="' + artist.avatar + '" class="sp-sidebar-artist-avatar" alt="' + artist.name + '">' +
+          '<div class="sp-s-meta">' +
+          '  <span class="sp-s-name">' + artist.name + '</span>' +
+          '  <span class="sp-s-role">' + artist.role + '</span>' +
+          '</div>';
+        item.addEventListener("click", function() {
+          selectArtist(artist.id);
+        });
+        dom.sidebarArtistList.appendChild(item);
+      });
+    }
+
+    // 2. Carousel Circular Cards
+    if (dom.artistsCarousel) {
+      dom.artistsCarousel.innerHTML = "";
+
+      // All Artists Circle Card
+      var allCard = document.createElement("div");
+      allCard.className = "sp-artist-card" + (state.selectedArtistId === "all" ? " active" : "");
+      allCard.setAttribute("tabindex", "0");
+      allCard.setAttribute("role", "button");
+      allCard.setAttribute("aria-label", "Pilih semua penyanyi");
+      allCard.innerHTML =
+        '<div class="sp-artist-avatar-wrap">' +
+        '  <img src="' + catalogData.all.avatar + '" alt="Semua Penyanyi">' +
+        '  <div class="sp-artist-play-hover"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>' +
+        '</div>' +
+        '<div class="sp-artist-name">Semua Penyanyi</div>' +
+        '<div class="sp-artist-type">3 Lagu Resmi</div>';
+      allCard.addEventListener("click", function() {
+        selectArtist("all");
+      });
+      allCard.addEventListener("keydown", function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          selectArtist("all");
+        }
+      });
+      dom.artistsCarousel.appendChild(allCard);
+
+      // Specific Artists Cards
+      catalogData.artists.forEach(function(artist) {
+        var card = document.createElement("div");
+        card.className = "sp-artist-card" + (state.selectedArtistId === artist.id ? " active" : "");
+        card.setAttribute("tabindex", "0");
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", "Pilih penyanyi " + artist.name);
+
+        var artistSongs = catalogData.songs.filter(function(s) { return s.artistId === artist.id; });
+        var songCountText = artistSongs.length + " Lagu";
+
+        card.innerHTML =
+          '<div class="sp-artist-avatar-wrap">' +
+          '  <img src="' + artist.avatar + '" alt="' + artist.name + '">' +
+          '  <div class="sp-artist-play-hover"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>' +
+          '</div>' +
+          '<div class="sp-artist-name">' + artist.name + '</div>' +
+          '<div class="sp-artist-type">' + artist.role + ' • ' + songCountText + '</div>';
+
+        card.addEventListener("click", function() {
+          selectArtist(artist.id);
+        });
+        card.addEventListener("keydown", function(e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectArtist(artist.id);
+          }
+        });
+        dom.artistsCarousel.appendChild(card);
+      });
+    }
+  }
+
+  // Render Tracks Table
+  function renderTracks() {
+    if (!dom.tracksTableBody) return;
+    dom.tracksTableBody.innerHTML = "";
+
+    var songs = getFilteredSongs();
+    if (songs.length === 0) {
+      var empty = document.createElement("div");
+      empty.className = "sp-empty-state";
+      empty.innerHTML = 'Tidak ada lagu yang cocok dengan pencarian "<strong>' + (state.searchQuery || "") + '</strong>".';
+      dom.tracksTableBody.appendChild(empty);
+      return;
+    }
+
+    songs.forEach(function(song, index) {
+      var globalIndex = catalogData.songs.findIndex(function(s) { return s.id === song.id; });
+      var isCurrent = globalIndex === state.currentSongIndex;
+      var isRowPlaying = isCurrent && state.isPlaying;
+      var isLiked = !!state.likedSongIds[song.id];
+
+      var row = document.createElement("div");
+      row.className = "sp-track-row" + (isRowPlaying ? " is-playing" : "");
+      row.setAttribute("data-global-index", String(globalIndex));
+      row.setAttribute("role", "row");
+
+      row.innerHTML =
+        '<div class="sp-col-num">' +
+        '  <span class="sp-num-text">' + (index + 1) + '</span>' +
+        '  <div class="sp-eq-anim">' +
+        '    <span class="sp-eq-bar"></span><span class="sp-eq-bar"></span><span class="sp-eq-bar"></span>' +
+        '  </div>' +
+        '  <button class="sp-btn-row-play" aria-label="Putar ' + song.title + '">' +
+        '    <svg viewBox="0 0 24 24">' + (isRowPlaying ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>' : '<path d="M8 5v14l11-7z"/>') + '</svg>' +
+        '  </button>' +
+        '</div>' +
+        '<div class="sp-col-title">' +
+        '  <img src="' + song.cover + '" class="sp-track-cover" alt="' + song.title + '" onerror="this.src=\'/covers/song-1.jpg\'">' +
+        '  <div class="sp-track-meta">' +
+        '    <span class="sp-track-title">' + song.title + '</span>' +
+        '    <span class="sp-track-artist">' +
+        '      <span class="sp-track-artist-link" data-artist-id="' + song.artistId + '">' + song.artist + '</span>' +
+        '    </span>' +
+        '  </div>' +
+        '</div>' +
+        '<div class="sp-col-album">' + song.album + '</div>' +
+        '<div class="sp-col-time">' +
+        '  <button class="sp-btn-row-like' + (isLiked ? ' is-liked' : '') + '" title="Favorit" aria-label="Suka lagu">' +
+        '    <svg viewBox="0 0 24 24" fill="' + (isLiked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>' +
+        '  </button>' +
+        '  <span>' + song.duration + '</span>' +
+        '</div>';
+
+      // Click on row to play
+      row.addEventListener("click", function(e) {
+        // If clicking like button
+        var likeBtn = e.target.closest(".sp-btn-row-like");
+        if (likeBtn) {
+          e.stopPropagation();
+          toggleLike(song.id);
+          return;
+        }
+
+        // If clicking artist link
+        var artistLink = e.target.closest(".sp-track-artist-link");
+        if (artistLink) {
+          e.stopPropagation();
+          var aId = artistLink.getAttribute("data-artist-id");
+          if (aId) selectArtist(aId);
+          return;
+        }
+
+        if (globalIndex === state.currentSongIndex) {
+          togglePlay();
+        } else {
+          loadAndPlaySong(globalIndex);
+        }
+      });
+
+      dom.tracksTableBody.appendChild(row);
     });
-    toggle.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        if(menu.classList.contains('open')) closeMenu();
-        else openMenu();
+  }
+
+  // Toggle Like Song
+  function toggleLike(songId) {
+    if (state.likedSongIds[songId]) {
+      delete state.likedSongIds[songId];
+      showToast("Dihapus dari Lagu Favorit");
+    } else {
+      state.likedSongIds[songId] = true;
+      showToast("Disimpan ke Lagu Favorit ❤️");
+    }
+    try {
+      localStorage.setItem("8c_liked_songs", JSON.stringify(state.likedSongIds));
+    } catch (e) {}
+
+    updateLikeButtonsUI();
+    renderTracks();
+  }
+
+  function updateLikeButtonsUI() {
+    var curSong = catalogData.songs[state.currentSongIndex];
+    if (curSong && dom.plLikeBtn) {
+      var isLiked = !!state.likedSongIds[curSong.id];
+      dom.plLikeBtn.classList.toggle("is-liked", isLiked);
+      dom.plLikeBtn.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="' + (isLiked ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+    }
+  }
+
+  // Load and play song
+  function loadAndPlaySong(index) {
+    if (index < 0 || index >= catalogData.songs.length) index = 0;
+    state.currentSongIndex = index;
+    try {
+      sessionStorage.setItem("8c_current_song_idx", String(index));
+    } catch (e) {}
+
+    var song = catalogData.songs[index];
+
+    // Update Bottom Player UI
+    dom.plTitle.textContent = song.title;
+    dom.plArtist.textContent = song.artist;
+    dom.plCover.src = song.cover;
+    dom.plTotalTime.textContent = song.duration;
+    dom.plCurrentTime.textContent = "0:00";
+    dom.plScrubberFill.style.width = "0%";
+
+    updateLikeButtonsUI();
+
+    // Set Audio Source
+    dom.audio.src = getSafeAudioUrl(song.src);
+    dom.audio.load();
+
+    playAudio();
+    updateMediaSession(song);
+  }
+
+  function playAudio() {
+    var promise = dom.audio.play();
+    if (promise !== undefined) {
+      promise.then(function() {
+        setPlayingUI(true);
+      }).catch(function(err) {
+        console.warn("Autoplay was prevented by browser policy:", err);
+        setPlayingUI(false);
+      });
+    }
+  }
+
+  function pauseAudio() {
+    dom.audio.pause();
+    setPlayingUI(false);
+  }
+
+  function togglePlay() {
+    if (state.isPlaying) {
+      pauseAudio();
+    } else {
+      if (!dom.audio.src || dom.audio.src === window.location.href) {
+        loadAndPlaySong(state.currentSongIndex);
+      } else {
+        playAudio();
+      }
+    }
+  }
+
+  function setPlayingUI(playing) {
+    state.isPlaying = playing;
+
+    // Big Hero Play Button
+    if (dom.btnBigPlay) {
+      dom.btnBigPlay.classList.toggle("is-playing", playing);
+      dom.bigPlayIcon.innerHTML = playing
+        ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+        : '<path d="M8 5v14l11-7z"/>';
+    }
+
+    // Bottom Player Main Play Button
+    if (dom.btnPlPlay) {
+      dom.btnPlPlay.classList.toggle("is-playing", playing);
+      dom.plPlayIcon.innerHTML = playing
+        ? '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'
+        : '<path d="M8 5v14l11-7z"/>';
+    }
+
+    renderTracks();
+  }
+
+  // Next Track
+  function playNextTrack() {
+    var songs = getFilteredSongs();
+    if (songs.length === 0) return;
+
+    if (state.isShuffle) {
+      var rand = Math.floor(Math.random() * catalogData.songs.length);
+      loadAndPlaySong(rand);
+      return;
+    }
+
+    var nextIdx = (state.currentSongIndex + 1) % catalogData.songs.length;
+    loadAndPlaySong(nextIdx);
+  }
+
+  // Previous Track
+  function playPrevTrack() {
+    if (dom.audio.currentTime > 3) {
+      dom.audio.currentTime = 0;
+      return;
+    }
+    var prevIdx = (state.currentSongIndex - 1 + catalogData.songs.length) % catalogData.songs.length;
+    loadAndPlaySong(prevIdx);
+  }
+
+  // MediaSession API
+  function updateMediaSession(song) {
+    if ("mediaSession" in navigator && typeof MediaMetadata !== "undefined") {
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: song.title,
+          artist: song.artist,
+          album: song.album,
+          artwork: [
+            { src: song.cover, sizes: "128x128", type: "image/jpeg" },
+            { src: song.cover, sizes: "512x512", type: "image/jpeg" }
+          ]
+        });
+        navigator.mediaSession.setActionHandler("play", playAudio);
+        navigator.mediaSession.setActionHandler("pause", pauseAudio);
+        navigator.mediaSession.setActionHandler("previoustrack", playPrevTrack);
+        navigator.mediaSession.setActionHandler("nexttrack", playNextTrack);
+      } catch (e) {}
+    }
+  }
+
+  // Audio Events
+  function initAudioEvents() {
+    dom.audio.addEventListener("timeupdate", function() {
+      var cur = dom.audio.currentTime || 0;
+      var dur = dom.audio.duration || 0;
+      var pct = dur > 0 ? (cur / dur) * 100 : 0;
+
+      dom.plScrubberFill.style.width = pct + "%";
+      dom.plCurrentTime.textContent = formatSeconds(cur);
+      if (dur > 0 && !isNaN(dur)) {
+        dom.plTotalTime.textContent = formatSeconds(dur);
       }
     });
-    backdrop.addEventListener('click', closeMenu);
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && menu.classList.contains('open')) closeMenu();
+
+    dom.audio.addEventListener("ended", function() {
+      if (state.isRepeat) {
+        dom.audio.currentTime = 0;
+        playAudio();
+      } else {
+        playNextTrack();
+      }
     });
-    window.addEventListener('resize', function(){
-      if(window.innerWidth >= 760 && menu.classList.contains('open')) closeMenu();
+
+    dom.audio.addEventListener("loadedmetadata", function() {
+      if (dom.audio.duration) {
+        dom.plTotalTime.textContent = formatSeconds(dom.audio.duration);
+      }
+    });
+
+    dom.audio.addEventListener("error", function() {
+      console.warn("Gagal memuat file audio, mencoba lagu berikutnya...");
+      showToast("Audio belum dapat diputar, berpindah...");
+      setTimeout(playNextTrack, 1500);
+    });
+
+    // Scrubber click/drag
+    function seekTo(clientX) {
+      var rect = dom.plScrubberTrack.getBoundingClientRect();
+      var offsetX = Math.max(0, Math.min(rect.width, clientX - rect.left));
+      var pct = offsetX / rect.width;
+      if (dom.audio.duration) {
+        dom.audio.currentTime = pct * dom.audio.duration;
+      }
+    }
+
+    var isDragging = false;
+    dom.plScrubberTrack.addEventListener("mousedown", function(e) {
+      isDragging = true;
+      seekTo(e.clientX);
+    });
+    window.addEventListener("mousemove", function(e) {
+      if (isDragging) seekTo(e.clientX);
+    });
+    window.addEventListener("mouseup", function() {
+      isDragging = false;
+    });
+
+    // Touch support for scrubber
+    dom.plScrubberTrack.addEventListener("touchstart", function(e) {
+      if (e.touches && e.touches.length) seekTo(e.touches[0].clientX);
     }, { passive: true });
+    dom.plScrubberTrack.addEventListener("touchmove", function(e) {
+      if (e.touches && e.touches.length) seekTo(e.touches[0].clientX);
+    }, { passive: true });
+
+    // Volume Slider
+    dom.volSlider.addEventListener("input", function(e) {
+      var val = parseFloat(e.target.value);
+      state.volume = val;
+      state.isMuted = val === 0;
+      dom.audio.volume = val;
+      updateVolumeIcon();
+    });
+
+    // Mute Toggle
+    dom.btnMuteToggle.addEventListener("click", function() {
+      state.isMuted = !state.isMuted;
+      if (state.isMuted) {
+        dom.audio.volume = 0;
+        dom.volSlider.value = 0;
+      } else {
+        var restoreVol = state.volume > 0.05 ? state.volume : 0.85;
+        dom.audio.volume = restoreVol;
+        dom.volSlider.value = restoreVol;
+      }
+      updateVolumeIcon();
+    });
+
+    function updateVolumeIcon() {
+      if (dom.audio.volume === 0 || state.isMuted) {
+        dom.volIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>';
+      } else if (dom.audio.volume < 0.5) {
+        dom.volIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>';
+      } else {
+        dom.volIcon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';
+      }
+    }
   }
 
-  // Scroll to Top
-  var toTop = document.getElementById('toTop');
-  if(toTop){
-    window.addEventListener('scroll', function(){
-      toTop.classList.toggle('show', window.scrollY > 400);
-    }, { passive: true });
-    toTop.addEventListener('click', function(){
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Bind Buttons & Controls
+  function initControls() {
+    // Play/Pause buttons
+    dom.btnBigPlay.addEventListener("click", function() {
+      var songs = getFilteredSongs();
+      if (songs.length > 0) {
+        var firstSongGlobalIndex = catalogData.songs.findIndex(function(s) { return s.id === songs[0].id; });
+        if (state.currentSongIndex === firstSongGlobalIndex) {
+          togglePlay();
+        } else {
+          loadAndPlaySong(firstSongGlobalIndex);
+        }
+      } else {
+        togglePlay();
+      }
     });
+
+    dom.btnPlPlay.addEventListener("click", togglePlay);
+    dom.btnPlNext.addEventListener("click", playNextTrack);
+    dom.btnPlPrev.addEventListener("click", playPrevTrack);
+
+    // Shuffle
+    function toggleShuffle() {
+      state.isShuffle = !state.isShuffle;
+      dom.btnPlShuffle.classList.toggle("active", state.isShuffle);
+      dom.btnShuffle.classList.toggle("active", state.isShuffle);
+      showToast(state.isShuffle ? "Mode Acak Aktif (Shuffle ON)" : "Mode Acak Nonaktif (Shuffle OFF)");
+    }
+    dom.btnPlShuffle.addEventListener("click", toggleShuffle);
+    dom.btnShuffle.addEventListener("click", toggleShuffle);
+
+    // Repeat
+    dom.btnPlRepeat.addEventListener("click", function() {
+      state.isRepeat = !state.isRepeat;
+      dom.btnPlRepeat.classList.toggle("active", state.isRepeat);
+      showToast(state.isRepeat ? "Mode Ulangi Lagu Aktif" : "Mode Ulangi Lagu Nonaktif");
+    });
+
+    // Follow Button
+    dom.btnFollow.addEventListener("click", function() {
+      var curArtist = state.selectedArtistId === "all" ? "8C Universe" : dom.heroName.textContent;
+      showToast("Berhasil mengikuti " + curArtist + " ⭐");
+    });
+
+    // Bottom Player Artist Click
+    dom.plArtist.addEventListener("click", function() {
+      var curSong = catalogData.songs[state.currentSongIndex];
+      if (curSong) {
+        selectArtist(curSong.artistId);
+      }
+    });
+
+    // Bottom Player Like Click
+    dom.plLikeBtn.addEventListener("click", function() {
+      var curSong = catalogData.songs[state.currentSongIndex];
+      if (curSong) {
+        toggleLike(curSong.id);
+      }
+    });
+
+    // Search Input
+    dom.searchInput.addEventListener("input", function(e) {
+      state.searchQuery = (e.target.value || "").trim();
+      dom.searchClear.classList.toggle("visible", state.searchQuery.length > 0);
+      renderTracks();
+    });
+
+    dom.searchClear.addEventListener("click", function() {
+      dom.searchInput.value = "";
+      state.searchQuery = "";
+      dom.searchClear.classList.remove("visible");
+      renderTracks();
+    });
+
+    // Sidebar All Tracks Menu
+    dom.menuAllTracks.addEventListener("click", function() {
+      selectArtist("all");
+    });
+    dom.btnLibraryTitle.addEventListener("click", function() {
+      selectArtist("all");
+    });
+
+    // Realtime Clock
+    function updateClock() {
+      var now = new Date();
+      var hh = String(now.getHours()).padStart(2, "0");
+      var mm = String(now.getMinutes()).padStart(2, "0");
+      var ss = String(now.getSeconds()).padStart(2, "0");
+      if (dom.clockText) {
+        dom.clockText.textContent = hh + ":" + mm + ":" + ss;
+      }
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
   }
 
-  document.addEventListener('DOMContentLoaded', updateClock);
+  // Initialize Spotify App
+  function init() {
+    initAudioEvents();
+    initControls();
+    renderArtists();
+    selectArtist("all");
+
+    // Initialize initial song into bottom bar
+    var song = catalogData.songs[state.currentSongIndex];
+    if (song) {
+      dom.plTitle.textContent = song.title;
+      dom.plArtist.textContent = song.artist;
+      dom.plCover.src = song.cover;
+      dom.plTotalTime.textContent = song.duration;
+      dom.audio.src = getSafeAudioUrl(song.src);
+      updateLikeButtonsUI();
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
 </script>
 </body>
